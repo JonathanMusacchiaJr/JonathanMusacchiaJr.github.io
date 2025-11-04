@@ -15,15 +15,18 @@
         display: block;
         position: absolute;
         top: 100px;
-        /* Change me! */
         left: 0px;
+        color: white;
+        line-height: 70px;
+        border-radius: 10px;
       }
 
       .board {
         height: 100vh;
+        overflow: hidden;
+        background-color: #f4f4f4;
       }
     </style>
-    <!-- 	<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script> -->
   </head>
 
   <body class="board">
@@ -68,40 +71,49 @@
         /////////////////// YOUR CODE BELOW HERE /////////////////////////
         //////////////////////////////////////////////////////////////////
 
-        // TODO 2 - Variable declarations
-
-
-
-
+        // TODO 2: Variable Declarations
+        var positionX = 0; // box's X position
+        var points = 0; // player's score
+        var speed = 10; // initial speed of box movement
 
         /**
          * This Function will be called 20 times/second.
          * Each time it is called, it should move the Box to a new location.
-         * If the box drifts off the screen, turn it around!
          */
         function update() {
+          // Move the box based on current speed
+          positionX += speed;
 
-        
+          // Bounce off the right wall
+          if (positionX > boardWidth - 70) {
+            speed *= -1;
+          }
 
-          
+          // Bounce off the left wall
+          if (positionX < 0) {
+            speed *= -1;
+          }
+
+          // Move the box to the new position
+          moveBoxTo(positionX);
         }
 
         /**
          * This Function will be called each time the box is clicked.
-         * Each time it is called, it should perform each of the following actions:
-         * - increase the points total
-         * - increase the speed
-         * - move the box to the left side of the screen.
          */
         function handleBoxClick() {
+          // Increase the player's score
+          points++;
 
+          // Reset the box to start position
+          positionX = 0;
 
+          // Update the text on the box
+          changeBoxText(points);
 
-
+          // Calculate new speed using linear formula (fixes the bug)
+          speed = 3 * points + 10;
         }
-
-
-        
       })();
     </script>
   </body>
